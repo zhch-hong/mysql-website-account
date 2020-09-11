@@ -1,0 +1,20 @@
+{
+  "name": "mysql-website-account",
+  "version": "1.0.0",
+  "description": "mysql数据库搭建node服务存储网站账户",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mysql",
+    "website"
+  ],
+  "author": "zhch_hong@163.com",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql": "^2.18.1",
+    "uuid": "^8.3.0"
+  }
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/axios@0.20.0/dist/axios.min.js"></script>
+    <style>
+      #table {
+        border-collapse: collapse;
+      }
+      #table td {
+        border: 1px solid;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>website account</h1>
+    <table id="table">
+      <thead>
+        <tr>
+          <th>网站</th>
+          <th>域名</th>
+          <th>用户名</th>
+          <th>密码</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <form id="form" action="/add" method="post">
+      <p>
+        <label for="website">网站</label>
+        <input id="website" name="website" type="text" />
+      </p>
+      <p>
+        <label for="domain">域名</label>
+        <input id="domain" name="domain" type="text" />
+      </p>
+      <p>
+        <label for="username">用户名</label>
+        <input id="username" name="username" type="text" />
+      </p>
+      <p>
+        <label for="password">密码</label>
+        <input id="password" name="password" type="password" />
+      </p>
+      <button type="reset">reset</button>
+      <button id="submit" type="button">submit</button>
+    </form>
+    <!-- 查询 -->
+    <script>
+      var table = document.getElementById('table');
+      axios.get('/query').then((res) => {
+        var { data } = res;
+        data.forEach(function (item) {
+          var tr = document.createElement('tr');
+          var td = [
+            item.website,
+            item.domain,
+            item.username,
+            item.password,
+          ].join('</td><td>');
+          td = '<td>' + td + '</td>';
+          tr.innerHTML = td;
+          table.tBodies[0].append(tr);
+        });
+      });
+    </script>
+    <!-- 保存 -->
+    <script>
+      var submit = document.getElementById('submit');
+      submit.addEventListener('click', function () {
+        var form = document.getElementById('form');
+        form = new FormData(form);
+        var data = {};
+        for (var iterator of form.entries()) {
+          data[iterator[0]] = iterator[1];
+        }
+        console.log(data);
+        axios
+          .post('/add', data)
+          .then((res) => {
+            alert(res.data.message);
+          })
+          .catch((err) => {
+            alert(err.message);
+          });
+      });
+    </script>
+  </body>
+</html>
